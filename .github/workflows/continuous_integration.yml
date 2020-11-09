@@ -4,9 +4,6 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  GO_VERSION: 1.15
-
 jobs:
   build-production-image:
     name: Build and test production docker image
@@ -24,4 +21,4 @@ jobs:
       run: sleep 2
 
     - name: Fire a test request
-      run: curl -I localhost:9000/
+      run: curl --head localhost:9000/

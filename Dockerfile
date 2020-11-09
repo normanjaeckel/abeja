@@ -2,9 +2,13 @@ FROM golang:1.15.4-alpine3.12 as builder
 
 WORKDIR /app
 
-COPY go.mod main.go ./
+RUN apk add make
 
-RUN go build
+COPY Makefile .
+COPY go.mod .
+COPY cmd cmd
+
+RUN make build
 
 
 FROM alpine:3.12.1
@@ -12,5 +16,7 @@ FROM alpine:3.12.1
 WORKDIR /app
 
 COPY --from=builder /app/abeja .
+
+EXPOSE 9000
 
 CMD ./abeja
