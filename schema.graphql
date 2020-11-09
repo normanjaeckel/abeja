@@ -1,0 +1,39 @@
+type Query {
+    events: [Event!]
+}
+
+type User {
+    id: ID!
+    name: String!
+    address: String
+}
+
+type Season {
+    id: ID!
+    year: int!
+    events: [Event!]!
+}
+
+type Event {
+    id: ID!
+    season: Season!
+    begin: int!
+    duration: int!
+    assignments: [Assignment!]
+}
+
+type Contract {
+    id: ID!
+    season: Season!
+    user: User!
+    signed: bool
+}
+
+type Assignment {
+    id: ID!
+    event: Event!
+    begin: int!
+    duration: int!
+    user: User!
+    contract: Contract!
+}

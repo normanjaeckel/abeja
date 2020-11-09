@@ -1,4 +1,4 @@
-# Abjea
+# Abeja
 
 A management system for event assistants.
 
