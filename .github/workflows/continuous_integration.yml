@@ -2,7 +2,7 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 env:
   GO_VERSION: 1.15
@@ -18,10 +18,10 @@ jobs:
       run: docker build . --tag=abeja
 
     - name: Run docker production image
-      run: docker run --detach abeja
+      run: docker run --detach --publish 9000:9000 abeja
 
     - name: Sleep for some seconds
       run: sleep 2
 
     - name: Fire a test request
-      run: curl -I localhost:9000/health
+      run: curl -I localhost:9000/

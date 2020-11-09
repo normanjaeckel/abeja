@@ -1,0 +1,7 @@
+# Patterns of intentionally untracked files that Git should ignore
+
+# Binary
+abeja
+
+# Private development data
+private/
