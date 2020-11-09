@@ -1,0 +1,27 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches: [ master ]
+
+env:
+  GO_VERSION: 1.15
+
+jobs:
+  build-production-image:
+    name: Build and test production docker image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create docker production image
+      run: docker build . --tag=abeja
+
+    - name: Run docker production image
+      run: docker run --detach abeja
+
+    - name: Sleep for some seconds
+      run: sleep 2
+
+    - name: Fire a test request
+      run: curl -I localhost:9000/health
