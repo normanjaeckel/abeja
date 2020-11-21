@@ -1,4 +1,7 @@
-all: build
+all: build run
 
 build:
-	go build -o abeja cmd/main.go
+	go build cmd/abeja/main.go
+
+run:
+	./abeja
