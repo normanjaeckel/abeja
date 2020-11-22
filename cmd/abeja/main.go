@@ -6,14 +6,29 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/abeja-project/abeja/internal/database"
+	"github.com/abeja-project/abeja/internal/graph"
+	"github.com/abeja-project/abeja/internal/graph/generated"
 )
 
 const addr = ":9000"
 
 func main() {
+	db := database.New()
+
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: graph.NewResolver(db)}))
+
+	mux := http.NewServeMux()
+
+	mux.Handle("/", playground.Handler("GraphQL playground", "/query"))
+	mux.Handle("/query", srv)
+
 	go func() {
 		fmt.Printf("Listening on %s\n", addr)
-		log.Fatal(http.ListenAndServe(addr, http.HandlerFunc(healthHandler)))
+		log.Fatal(http.ListenAndServe(addr, mux))
 	}()
 
 	waitForShutdown()

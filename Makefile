@@ -1,7 +1,7 @@
 all: build run
 
 build:
-	go build cmd/abeja/main.go
+	go build ./cmd/abeja/
 
 run:
 	./abeja

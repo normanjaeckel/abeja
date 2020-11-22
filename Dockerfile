@@ -2,7 +2,7 @@ FROM golang:1.15.4-alpine3.12 as builder
 
 WORKDIR /app
 
-RUN apk add make
+RUN apk add make git
 
 COPY Makefile .
 COPY go.mod .
